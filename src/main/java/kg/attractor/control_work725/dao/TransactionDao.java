@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -26,6 +27,12 @@ public class TransactionDao {
         return transaction;
     };
 
+    public Optional<Transaction> findById(Long id) {
+        String sql = "SELECT * FROM transactions WHERE id = ?";
+        List<Transaction> transactions = jdbcTemplate.query(sql, transactionRowMapper, id);
+        return transactions.stream().findFirst();
+    }
+
     public List<Transaction> findByStatus(String status) {
         String sql = "SELECT * FROM transactions WHERE status = ?";
         return jdbcTemplate.query(sql, transactionRowMapper, status);
@@ -34,5 +41,10 @@ public class TransactionDao {
     public void save(Transaction transaction) {
         String sql = "INSERT INTO transactions (from_account_id, to_account_id, amount, currency, timestamp, status, admin_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, transaction.getFromAccountId(), transaction.getToAccountId(), transaction.getAmount(), transaction.getCurrency(), transaction.getTimestamp(), transaction.getStatus(), transaction.getAdminId());
+    }
+
+    public void update(Transaction transaction) {
+        String sql = "UPDATE transactions SET status = ?, admin_id = ? WHERE id = ?";
+        jdbcTemplate.update(sql, transaction.getStatus(), transaction.getAdminId(), transaction.getId());
     }
 }

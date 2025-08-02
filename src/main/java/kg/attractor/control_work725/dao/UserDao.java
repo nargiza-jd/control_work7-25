@@ -25,6 +25,12 @@ public class UserDao {
         return user;
     };
 
+    public Optional<User> findById(Long id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        List<User> users = jdbcTemplate.query(sql, userRowMapper, id);
+        return users.stream().findFirst();
+    }
+
     public Optional<User> findByPhoneNumber(String phoneNumber) {
         String sql = "SELECT * FROM users WHERE phone_number = ?";
         List<User> users = jdbcTemplate.query(sql, userRowMapper, phoneNumber);
@@ -34,5 +40,10 @@ public class UserDao {
     public void save(User user) {
         String sql = "INSERT INTO users (phone_number, name, password, role, is_blocked) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, user.getPhoneNumber(), user.getName(), user.getPassword(), user.getRole(), user.isBlocked());
+    }
+
+    public void update(User user) {
+        String sql = "UPDATE users SET is_blocked = ? WHERE id = ?";
+        jdbcTemplate.update(sql, user.isBlocked(), user.getId());
     }
 }

@@ -23,6 +23,12 @@ public class AccountDao {
         return account;
     };
 
+    public Optional<Account> findById(Long id) {
+        String sql = "SELECT * FROM accounts WHERE id = ?";
+        List<Account> accounts = jdbcTemplate.query(sql, accountRowMapper, id);
+        return accounts.stream().findFirst();
+    }
+
     public Optional<Account> findByUserIdAndCurrency(Long userId, String currency) {
         String sql = "SELECT * FROM accounts WHERE user_id = ? AND currency = ?";
         List<Account> accounts = jdbcTemplate.query(sql, accountRowMapper, userId, currency);
@@ -32,5 +38,15 @@ public class AccountDao {
     public void save(Account account) {
         String sql = "INSERT INTO accounts (user_id, currency, balance) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, account.getUserId(), account.getCurrency(), account.getBalance());
+    }
+
+    public void update(Account account) {
+        String sql = "UPDATE accounts SET balance = ?, currency = ?, user_id = ? WHERE id = ?";
+        jdbcTemplate.update(sql, account.getBalance(), account.getCurrency(), account.getUserId(), account.getId());
+    }
+
+    public List<Account> findByUserId(Long userId) {
+        String sql = "SELECT * FROM accounts WHERE user_id = ?";
+        return jdbcTemplate.query(sql, accountRowMapper, userId);
     }
 }
