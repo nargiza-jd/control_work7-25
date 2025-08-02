@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002_insert_users
+      author: nargiza
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: phone_number, value: "12345" }
+              - column: { name: name, value: "Main Admin" }
+              - column: { name: password, value: "$2a$10$FH.9uFvD90mNsgT05MwWi.R8KcGrT7RxCmjyjbRIbsQ6T1GkbRFxO" }
+              - column: { name: role, value: "ADMIN" }
+              - column: { name: is_blocked, valueBoolean: false }
+
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: phone_number, value: "admin2" }
+              - column: { name: name, value: "Admin Two" }
+              - column: { name: password, value: "$2a$10$FH.9uFvD90mNsgT05MwWi.R8KcGrT7RxCmjyjbRIbsQ6T1GkbRFxO" }
+              - column: { name: role, value: "ADMIN" }
+              - column: { name: is_blocked, valueBoolean: false }
+
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: phone_number, value: "admin3" }
+              - column: { name: name, value: "Admin Three" }
+              - column: { name: password, value: "$2a$10$FH.9uFvD90mNsgT05MwWi.R8KcGrT7RxCmjyjbRIbsQ6T1GkbRFxO" }
+              - column: { name: role, value: "ADMIN" }
+              - column: { name: is_blocked, valueBoolean: false }
+
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: phone_number, value: "user1" }
+              - column: { name: name, value: "User One" }
+              - column: { name: password, value: "$2a$10$kDUPpndk/30Zce/.5C4YS.mlZ/KSYVm18It2ExH2DpVhUXdWAVMn." }
+              - column: { name: role, value: "USER" }
+              - column: { name: is_blocked, valueBoolean: false }
+
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: phone_number, value: "user2" }
+              - column: { name: name, value: "User Two" }
+              - column: { name: password, value: "$2a$10$kDUPpndk/30Zce/.5C4YS.mlZ/KSYVm18It2ExH2DpVhUXdWAVMn." }
+              - column: { name: role, value: "USER" }
+              - column: { name: is_blocked, valueBoolean: false }
+
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: phone_number, value: "user3" }
+              - column: { name: name, value: "User Three" }
+              - column: { name: password, value: "$2a$10$kDUPpndk/30Zce/.5C4YS.mlZ/KSYVm18It2ExH2DpVhUXdWAVMn." }
+              - column: { name: role, value: "USER" }
+              - column: { name: is_blocked, valueBoolean: false }
