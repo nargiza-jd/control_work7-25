@@ -2,6 +2,7 @@ package kg.attractor.control_work725.service.impl;
 
 import kg.attractor.control_work725.dao.AccountDao;
 import kg.attractor.control_work725.dao.UserDao;
+import kg.attractor.control_work725.dto.UserRegisterDto;
 import kg.attractor.control_work725.model.Account;
 import kg.attractor.control_work725.model.User;
 import kg.attractor.control_work725.service.UserService;
