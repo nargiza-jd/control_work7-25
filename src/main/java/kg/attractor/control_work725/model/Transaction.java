@@ -16,6 +16,7 @@ public class Transaction {
     private double amount;
     private String currency;
     private LocalDateTime timestamp;
-    private String status;
+    private TransactionStatus status;
     private Long adminId;
+    private boolean deleted;
 }
