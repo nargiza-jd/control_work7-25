@@ -55,6 +55,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void approveTransaction(Long transactionId) {
+        log.info("Админ подтверждает транзакцию {}", transactionId);
         Transaction tx = transactionDao.findById(transactionId).orElseThrow(() -> new NotFoundException("Transaction"));
         if (!tx.getStatus().equals(TransactionStatus.PENDING)) {
             throw new IllegalStateException("Транзакция уже обработана");
