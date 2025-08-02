@@ -3,7 +3,7 @@ package kg.attractor.control_work725.controller;
 import jakarta.validation.Valid;
 import kg.attractor.control_work725.dto.AccountCreateDto;
 import kg.attractor.control_work725.dto.TransactionCreateDto;
-import kg.attractor.control_work725.dto.UserRegisterDto;
+import kg.attractor.control_work725.model.User;
 import kg.attractor.control_work725.service.AccountService;
 import kg.attractor.control_work725.service.TransactionService;
 import kg.attractor.control_work725.service.UserService;
@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @RestController
 @RequestMapping("/api")
@@ -21,37 +22,32 @@ public class PaymentController {
     private final AccountService accountService;
     private final TransactionService transactionService;
 
-    @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody UserRegisterDto userDto) {
-        userService.registerUser(userDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Пользователь зарегистрирован успешно!");
-    }
-
     @PostMapping("/accounts")
-    public ResponseEntity<String> createAccount(@Valid @RequestBody AccountCreateDto accountDto) {
-        accountService.createAccount(accountDto);
+    public ResponseEntity<String> createAccount(@Valid @RequestBody AccountCreateDto accountDto, @AuthenticationPrincipal User user) {
+        accountService.createAccount(accountDto, user);
         return ResponseEntity.status(HttpStatus.CREATED).body("Счет создан успешно!");
     }
 
     @GetMapping("/accounts/balance")
-    public ResponseEntity<Double> getAccountBalance() {
-        double balance = accountService.getAccountBalance();
-        return ResponseEntity.ok(balance);
+    public ResponseEntity<Double> getAccountBalance(@AuthenticationPrincipal User user) {
+        // TODO: Реализовать логику получения баланса
+        return ResponseEntity.ok(0.0);
     }
 
     @PostMapping("/accounts/balance")
-    public ResponseEntity<String> topUpAccount(@RequestBody Double amount) {
-        accountService.topUpAccount(amount);
+    public ResponseEntity<String> topUpAccount(@RequestBody Double amount, @AuthenticationPrincipal User user) {
+        // TODO: Реализовать логику пополнения счета
         return ResponseEntity.ok("Счет успешно пополнен!");
     }
 
     @GetMapping("/accounts")
-    public ResponseEntity<?> getAccounts() {
-        return ResponseEntity.ok(accountService.getAccounts());
+    public ResponseEntity<?> getAccounts(@AuthenticationPrincipal User user) {
+        // TODO: Реализовать логику получения списка счетов для текущего пользователя
+        return ResponseEntity.ok("Список счетов");
     }
 
     @PostMapping("/transactions")
-    public ResponseEntity<String> createTransaction(@Valid @RequestBody TransactionCreateDto transactionDto) {
+    public ResponseEntity<String> createTransaction(@Valid @RequestBody TransactionCreateDto transactionDto, @AuthenticationPrincipal User user) {
         transactionService.createTransaction(transactionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Транзакция создана успешно!");
     }
