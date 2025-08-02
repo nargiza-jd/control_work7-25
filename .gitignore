@@ -31,5 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
-/db/
-/logs/
+# DB temp files
+*.lock.db
+
+# Logs
+logs/
