@@ -10,6 +10,7 @@ import kg.attractor.control_work725.model.TransactionStatus;
 import kg.attractor.control_work725.model.User;
 import kg.attractor.control_work725.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
@@ -74,6 +76,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void rollbackTransaction(Long transactionId) {
+        log.info("Админ откатывает транзакцию {}", transactionId);
         Transaction tx = transactionDao.findById(transactionId).orElseThrow(() -> new NotFoundException("Transaction"));
 
         if (!tx.getStatus().equals(TransactionStatus.APPROVED)) {
@@ -100,6 +103,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void deleteTransaction(Long id) {
+        log.info("Админ удаляет транзакцию {}", id);
         Transaction tx = transactionDao.findById(id).orElseThrow(() -> new NotFoundException("Transaction"));
 
         if (!tx.getStatus().equals(TransactionStatus.ROLLBACKED)) {
